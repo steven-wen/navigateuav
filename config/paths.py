@@ -1,5 +1,6 @@
 # Definition of main path
 from pathlib import Path
+import os
 import sys
 
 """
@@ -21,23 +22,21 @@ level	path
 
 def project_root() -> Path:
     """
-    Dynamically find 'bearinguav' root directory.
+    Return the outer project directory from this file's relative location.
+
+    Layout: <project_root>/bearing/config/paths.py
+    BEARING_UAV_PROJECT_ROOT can override this for a custom dataset layout.
     """
-    p = Path(__file__).resolve()
-    for parent in p.parents:
-        if parent.name == "bearinguav":
-            return parent
-    raise RuntimeError("bearinguav root not found")
+    override = os.environ.get("BEARING_UAV_PROJECT_ROOT")
+    if override:
+        return Path(override).expanduser().resolve()
+    return Path(__file__).resolve().parents[2]
 
 def dataset_path(name: str) -> Path:
     """
     Return root directory of dataset.
     """
-    p = Path(__file__).resolve()
-    for parent in p.parents:
-        if parent.name == "bearinguav":
-            return parent / name
-    raise RuntimeError("bearinguav root not found")
+    return project_root() / name
 
 # ---------- Project root directory
 proj_dir = project_root()  #"/your/path/of/proj/bearingnav/model/bearinguav" 

@@ -10,10 +10,12 @@ set -e
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$REPO_ROOT"
 export PYTHONPATH="$REPO_ROOT:${PYTHONPATH}"
-export MPLCONFIGDIR="${MPLCONFIGDIR:-/tmp/bearinguav_mplconfig}"
+export MPLCONFIGDIR="${MPLCONFIGDIR:-$REPO_ROOT/.cache/matplotlib}"
+export TORCH_HOME="${TORCH_HOME:-$REPO_ROOT/.cache/torch}"
 export BEARING_UAV_RSI_TYPE="${BEARING_UAV_RSI_TYPE:-254k}"
 PYTHON_BIN="${PYTHON_BIN:-python}"
 mkdir -p "$MPLCONFIGDIR"
+mkdir -p "$TORCH_HOME"
 
 # ====================== parameters ======================
 # Debug:    1.'37bc'+1+1+1; 2. 96+0/1+1+1. 

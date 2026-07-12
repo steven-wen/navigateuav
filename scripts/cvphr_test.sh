@@ -11,10 +11,12 @@ project_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$project_root"
 echo "[Run] project_root=$project_root"
 export PYTHONPATH="$project_root:${PYTHONPATH}"
-export MPLCONFIGDIR="${MPLCONFIGDIR:-/tmp/bearinguav_mplconfig}"
+export MPLCONFIGDIR="${MPLCONFIGDIR:-$project_root/.cache/matplotlib}"
+export TORCH_HOME="${TORCH_HOME:-$project_root/.cache/torch}"
 export BEARING_UAV_RSI_TYPE="${BEARING_UAV_RSI_TYPE:-254k}"
 PYTHON_BIN="${PYTHON_BIN:-python}"
 mkdir -p "$MPLCONFIGDIR"
+mkdir -p "$TORCH_HOME"
 
 # ====================== parameters ======================
 # Debug: '37bc'/96+1+3D model .
@@ -32,7 +34,7 @@ device_id="${DEVICE_ID:-0}"
 # bestpth_dir="./Bearing_UAV/satellite_view" 
 
 # 3D model: Pre-trained cvphr_3d_best_model_dir 
-bestpth_dir="${BESTPTH_DIR:-./Bearing_UAV/cross_view}"
+bestpth_dir="${BESTPTH_DIR:-$project_root/Bearing_UAV/cross_view}"
 
 # User model: Your trained model dir:
 # bestpth_dir="${project_root}/results/c4ma/phr5_~~~"
